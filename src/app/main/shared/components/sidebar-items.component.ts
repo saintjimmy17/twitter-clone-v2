@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SidebarItems } from '../../interface';
 import { ModelService } from '../services/model.service';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sidebar-items',
@@ -20,7 +22,7 @@ import { ModelService } from '../services/model.service';
     </div>
 
     <!-- Logout Button -->
-    <div class="flex flex-row items-center">
+    <div (click)="signOut()" *ngIf="authService.userData | async" class="flex flex-row items-center">
       <div class="material-icons text-white relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer">
         logout
       </div>
@@ -48,7 +50,7 @@ import { ModelService } from '../services/model.service';
   styles: [
   ]
 })
-export class SidebarItemsComponent {
+export class SidebarItemsComponent implements OnInit, OnDestroy{
   items: Array<SidebarItems> = [
     {
       label:'Home',
@@ -62,13 +64,35 @@ export class SidebarItemsComponent {
     }
   ]
 
-  constructor(private modalService: ModelService) { }
+  subscription!: Subscription
+
+  constructor(private modalService: ModelService, public authService: AuthService) { }
+
+  ngOnInit(): void {
+    this.subscription = this.authService.userData.subscribe((user) => {
+        if(!user) {
+          this.items = this.items.filter((item) => {
+            return item.label != 'Profile'
+          })
+        } else {
+          this.items.push({
+            label: 'Profile',
+            route: `/user/${this.authService.loggedInUserId}`,
+            icon: 'person'
+          })
+        }
+      })
+  }
 
   openLoginModal(): void {
     this.modalService.isLoginModelOpen.set(true);
   }
 
   signOut(){
+    this.authService.signOut()
+  }
 
+  ngOnDestroy(): void {
+      this.subscription.unsubscribe();
   }
 }
