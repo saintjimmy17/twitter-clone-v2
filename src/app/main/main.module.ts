@@ -13,6 +13,9 @@ import { RegisterModalComponent } from './shared/auth/register-modal/register-mo
 import { ModalComponent } from './shared/components/modal.component';
 import { ButtonComponent } from './shared/components/button.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { LoaderComponent } from './shared/components/loader.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 
 @NgModule({
@@ -26,7 +29,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginModalComponent,
     RegisterModalComponent,
     ModalComponent,
-    ButtonComponent
+    ButtonComponent,
+    UserProfileComponent,
+    LoaderComponent,
+    EditUserComponent
   ],
   imports: [
     CommonModule,
