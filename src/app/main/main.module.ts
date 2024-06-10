@@ -12,10 +12,17 @@ import { LoginModalComponent } from './shared/auth/login-modal/login-modal.compo
 import { RegisterModalComponent } from './shared/auth/register-modal/register-modal.component';
 import { ModalComponent } from './shared/components/modal.component';
 import { ButtonComponent } from './shared/components/button.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { LoaderComponent } from './shared/components/loader.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { HomeComponent } from './home/home.component';
+import { FormComponent } from './components/form.component';
+import { PostsComponent } from './components/posts/posts.component';
+import { PostItemsComponent } from './components/posts/post-items.component';
+import { DateAgoPipe } from './shared/pipes/date-ago.pipe';
+import { PostComponent } from './post/post.component';
+import { CommentsComponent } from './components/comments/comments.component';
 
 
 @NgModule({
@@ -32,12 +39,20 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     ButtonComponent,
     UserProfileComponent,
     LoaderComponent,
-    EditUserComponent
+    EditUserComponent,
+    HomeComponent,
+    FormComponent,
+    PostsComponent,
+    PostItemsComponent,
+    DateAgoPipe,
+    PostComponent,
+    CommentsComponent,
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class MainModule { }

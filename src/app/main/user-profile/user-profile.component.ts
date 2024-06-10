@@ -5,6 +5,7 @@ import { UserService } from '../shared/services/user.service';
 import { User } from '../interface';
 import { Subscription, count } from 'rxjs';
 import { ModelService } from '../shared/services/model.service';
+import { ConfigService } from '../shared/services/config.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,7 +23,9 @@ export class UserProfileComponent implements OnInit {
 
   private subscription!: Subscription;
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService, public auth: AuthService, public modalService: ModelService) {}
+  constructor(private activatedRoute: ActivatedRoute, private userService: UserService,
+    private config:ConfigService,
+    public auth: AuthService, public modalService: ModelService) {}
 
   ngOnInit(): void {
     this.subscription = this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
@@ -41,8 +44,8 @@ export class UserProfileComponent implements OnInit {
 
   getCurrentUserProfileInfo(): void {
     this.subscription = this.userService.getAllUsers().subscribe(_user => {
-      console.log(_user);
       this.user = _user.find(u => u.uid === this.currentUserId) as User;
+      this.config.updateHeaderSetting(this.user.displayName, true)
     })
   }
 
